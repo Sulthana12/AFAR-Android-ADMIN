@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="16dp" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="16dp" />
+
+
+        <TextView
+            android:id="@+id/driverLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="Driver Id's Proof"
+            android:textSize="20dp"
+            app:fontFamily="@font/dmsans_regular"
+
+            android:textStyle="bold"
+            android:visibility="visible"
+            android:textColor="@color/labelrecyclerview"
+
+            app:layout_constraintLeft_toLeftOf="@id/guideline_left"
+            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:autoLink="web"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:linksClickable="true"
+            android:textColorLink="@color/newtheme_2"
+            android:textColor="@color/labelrecyclerview"
+            app:fontFamily="@font/dmsans_regular"
+            android:id="@+id/text"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:text="If required any 1 vehicle's/Pilot's Extra Documents can be uploaded Here"
+            android:visibility="visible"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layout_constraintTop_toBottomOf="@id/driverLabel"
+
+            />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="Id Proof"
+            android:id="@+id/proof"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="20dp"
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            android:layout_marginEnd="10dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusTopStart="16dp"
+            android:visibility="visible"
+            android:textColorHint="@color/labelrecyclerview"
+            app:endIconTint="@color/labelrecyclerview"
+            app:layout_constraintEnd_toStartOf="@id/guideline_right"
+            app:layout_constraintStart_toEndOf="@id/guideline_left"
+            app:layout_constraintTop_toBottomOf="@+id/text"
+            app:boxStrokeColor="@color/newtheme_2"
+            app:fontFamily="@font/dmsans_regular"
+            >
+
+            <AutoCompleteTextView
+                android:id="@+id/proofSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                app:fontFamily="@font/dmsans_regular"
+
+                android:textColor="@color/labelrecyclerview"
+
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:autoLink="web"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:linksClickable="true"
+            android:textColorLink="@color/newtheme_2"
+            android:textColor="@color/newtheme_2"
+            android:id="@+id/pdffileTxt"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/proof"
+
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/uploadfile"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@color/labelrecyclerview"
+            android:text="Browse..."
+            app:fontFamily="@font/dmsans_regular"
+
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pdffileTxt"
+/>
+         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/commentstext"
+            android:layout_width="wrap_content"
+            android:layout_height="140dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginStart="40dp"
+            android:clickable="false"
+            android:focusable="false"
+            android:saveEnabled="false"
+            android:scaleType="centerCrop"
+             app:fontFamily="@font/dmsans_regular"
+             android:textSize="16sp"
+             android:visibility="gone"
+             android:textColor="@color/labelrecyclerview"
+             app:layout_constraintLeft_toLeftOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/uploadfile" />
+
+
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:id="@+id/Login_avi"
+            style="@style/AVLoadingIndicatorView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone"
+            app:indicatorColor="#4897E0"
+            app:indicatorName="LineScalePulseOutIndicator"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/comments_constraints"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:background="@color/blue_value"
+            app:layout_constraintBottom_toTopOf="@+id/bottom_layout"
+            tools:ignore="MissingConstraints">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/comments_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="center|start"
+                android:padding="@dimen/margin_6dp"
+                android:textStyle="bold"
+                android:layout_marginLeft="20dp"
+                android:text="Add Comments"
+                android:textColor="@color/panchayathnamecolor"
+                android:textSize="@dimen/font_12sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                tools:ignore="MissingConstraints" />
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/blue_value"
+                app:layout_constraintTop_toBottomOf="@+id/comments_label"
+                tools:layout_editor_absoluteX="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                tools:ignore="MissingConstraints">
+
+
+                <EditText
+                    android:id="@+id/edit_text_comments"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/margin_70dp"
+                    android:layout_marginLeft="@dimen/margin_16dp"
+                    android:background="@drawable/editext_btc"
+                    android:gravity="start"
+                    app:layout_constraintWidth_percent="0.70"
+                    android:imeOptions="actionDone"
+
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/profile_img"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/profile_img"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:padding="8dp" />
+
+
+
+                <ImageView
+                    android:id="@+id/profile_img"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/margin_70dp"
+                    android:layout_marginStart="@dimen/margin_10dp"
+                    app:layout_constraintWidth_percent="0.20"
+                    android:src="@drawable/user"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="MissingConstraints" />
+
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/bottom_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/red"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_right">
+
+            <TextView
+                android:id="@+id/reject"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/red"
+                android:gravity="center"
+                android:padding="@dimen/margin_16dp"
+                android:text="Rejected"
+                android:textColor="@color/labelrecyclerview"
+                android:visibility="visible"
+                android:textStyle="bold"
+                app:layout_constraintWidth_percent="0.50"
+                android:textSize="@dimen/font_14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/finish"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/finish"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/approved_button_background"
+                android:gravity="center"
+                android:padding="@dimen/margin_12dp"
+                android:text="Approved"
+                app:layout_constraintWidth_percent="0.50"
+                android:drawableLeft="@drawable/green_tick"
+                android:textColor="@color/white"
+                android:visibility="visible"
+                android:textStyle="bold"
+                android:textSize="@dimen/font_14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+
+
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

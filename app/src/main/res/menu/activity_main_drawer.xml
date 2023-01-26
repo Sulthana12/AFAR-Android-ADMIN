@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_dashboard"
+            android:icon="@drawable/dashboard"
+            android:title="@string/menu_dash" />
+        <item
+            android:id="@+id/nav_ride"
+            android:icon="@drawable/taxi_driver"
+            android:title="@string/pilots" />
+
+        <item
+            android:id="@+id/nav_payments"
+            android:icon="@drawable/passenger"
+            android:title="@string/passengers" />
+        <item
+            android:id="@+id/nav_refer"
+            android:icon="@drawable/refer"
+            android:title="@string/menu_refer" />
+        <item
+            android:id="@+id/nav_paymnents"
+            android:icon="@drawable/payments"
+            android:title="@string/menu_payments" />
+
+        <item
+            android:id="@+id/nav_support"
+            android:icon="@drawable/ic_baseline_support_agent_24"
+            android:title="@string/menu_help" />
+
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/about"
+            android:title="@string/menu_about" />
+    </group>
+</menu>

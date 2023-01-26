@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--suppress AndroidUnknownAttribute, AndroidUnknownAttribute, AndroidUnknownAttribute -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/editext_whit_bg"
+    >
+
+    <CheckBox
+        android:id="@+id/txt_view_all"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/all"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:layout_marginRight="@dimen/margin_16dp"
+        android:textColor="@color/socialmedia"
+        android:textSize="@dimen/font_12sp"
+        android:textStyle="bold"/>
+
+    <View
+        android:layout_width="@dimen/margin_166dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/margin_5dp"
+        android:layout_marginBottom="@dimen/margin_5dp"
+        android:background="@color/light_white" />
+
+    <CheckBox
+        android:id="@+id/textview_pending"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_16dp"
+        android:text="@string/pending"
+        android:textColor="@color/socialmedia"
+        android:textSize="@dimen/font_12sp"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="@dimen/margin_166dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/margin_5dp"
+        android:layout_marginBottom="@dimen/margin_5dp"
+        android:background="@color/light_white" />
+
+    <CheckBox
+        android:id="@+id/txt_approval"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_5dp"
+        android:layout_marginEnd="@dimen/margin_16dp"
+        android:text="@string/approved"
+        android:drawablePadding="@dimen/padding_4dp"
+        android:textColor="@color/socialmedia"
+        android:textSize="@dimen/font_12sp"
+        android:textStyle="bold" />
+
+    <CheckBox
+        android:id="@+id/txt_reject"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="viewStart"
+        android:layout_marginBottom="@dimen/margin_16dp"
+        android:layout_marginRight="@dimen/margin_16dp"
+        android:drawablePadding="@dimen/padding_4dp"
+        android:text="@string/reject"
+        android:textColor="@color/socialmedia"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:visibility="visible"/>
+
+
+
+
+
+</LinearLayout>
