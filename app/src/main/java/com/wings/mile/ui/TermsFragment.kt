@@ -1,4 +1,4 @@
-package com.wings.mile.ui.aboutus
+package com.wings.mile.ui
 
 import android.annotation.TargetApi
 import android.os.Build
@@ -16,7 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.wings.mile.databinding.FragmentGalleryBinding
 import java.lang.UnsupportedOperationException
 
-class AboutusFragment : Fragment() {
+class TermsFragment : Fragment() {
 
     private var _binding: FragmentGalleryBinding? = null
 
@@ -29,8 +29,7 @@ class AboutusFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val aboutusViewModel =
-            ViewModelProvider(this).get(AboutusViewModel::class.java)
+
 
         _binding = FragmentGalleryBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -76,6 +75,6 @@ class AboutusFragment : Fragment() {
                 )
             }
         }
-        webview.loadUrl("https://afarstorage.blob.core.windows.net/mobile-app/AboutUs.html")
+        webview.loadUrl( "https://afarstorage.blob.core.windows.net/mobile-app/TermsandCondition.html")
     }
 }

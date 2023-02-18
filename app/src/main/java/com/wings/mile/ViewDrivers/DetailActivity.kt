@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.text.InputFilter
 import android.text.InputType
 import android.util.Base64
 import android.view.LayoutInflater
@@ -58,6 +59,7 @@ class DetailActivity : Fragment(), DatePickerDialog.OnDateSetListener {
     lateinit var savedriver: getdriver
     lateinit var savedriver1: savedriver
     lateinit var loginResponse: loginResponseItem
+    private val blockCharacterSet = "₹@.~#^:;?'|$%&*!/_,()-+0123456789"
     val DATE_FORMAT_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
     val DATE_FORMAT_PATTERN_1 = "yyyy-MM-dd'T'HH:mm:ss" //2020-11-27T12:18:41
     val DATE_FORMAT_PATTERN_2 = "dd/MM/yyyy hh:mm a"
@@ -79,6 +81,12 @@ class DetailActivity : Fragment(), DatePickerDialog.OnDateSetListener {
     var imagedata:String?=""
     var imagelocation:String?=""
     var imagelocationname:String?=""
+    private val filters =
+        InputFilter { source, start, end, dest, dstart, dend ->
+            if (source != null && blockCharacterSet.contains("" + source)) {
+                ""
+            } else null
+        }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -122,7 +130,8 @@ class DetailActivity : Fragment(), DatePickerDialog.OnDateSetListener {
     private fun initializeView() {
         dataBinding.lifecycleOwner = this
 
-
+        dataBinding.firstnameEdittext.filters=arrayOf<InputFilter>(filters )
+        dataBinding.lastnameEdittext.filters=arrayOf<InputFilter>(filters )
         val bundle = this.arguments
         val genderValue =  (activity as NavigationActivity).getgender()
 //        val vehicleValue = bundle?.get("Vehicle")
@@ -141,6 +150,7 @@ class DetailActivity : Fragment(), DatePickerDialog.OnDateSetListener {
         dataBinding.birthLabelEdittext.setText(savedriver.date_of_birth!!)
         dataBinding.birthLabelEdittext.setInputType(InputType.TYPE_NULL)
         dataBinding.calllayout.visibility=View.VISIBLE
+
         try {
            // (activity as DashboardActivity).iconfeedback()
             val genderValue = Gson().toJson( (activity as NavigationActivity).getgender())
@@ -217,7 +227,7 @@ class DetailActivity : Fragment(), DatePickerDialog.OnDateSetListener {
                     district = savedriver.usr_district,
                     drv_license_no = "",
                     en_flag = "",
-                    pincode = "",
+                    pincode = dataBinding.pincodeEdittext.text.toString(),
                     state = savedriver.usr_state,
                     vehicle_type_id = savedriver.vehicle_type_id,
                     district_id = savedriver.district_id,

@@ -67,6 +67,9 @@
     <string name="menu_savedplace">Saved Places</string>
     <string name="menu_help">Support</string>
     <string name="menu_about">About us</string>
+    <string name="terms_and_privacy_policy">Terms and Conditions</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="refund_policy">Cancellation and Refund Policy</string>
     <string name="mapbox_access_token">pk.eyJ1IjoicmFoYW1hdGhqYW4iLCJhIjoiY2w5aWF0Z3B5MTVtMjN2cnExc3FxdjkyMyJ9.acI6a5iNQodY6esmIs-A-w</string>
     <string name="title_activity_dashboard">DashboardActivity</string>
     <!-- Strings used for fragments for navigation -->
@@ -78,6 +81,11 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="message">
+        SendSMS?APIKey=7n425U10ZEyLf0BqP3Zzrw&amp;senderid=RRSMSG&amp;channel=2&amp;
+        DCS=0
+        &amp;flashsms=0&amp;number=91%1$s&amp;text=%2$sRP&amp;route=1&amp;dlttemplateid=1507162892814168027"
+        </string>
 
     <string name="welcome_taji">Welcome To AFAR CABS!!!</string>
     <string name="hello">Hello</string>
@@ -406,12 +414,12 @@
     <string name="about_us">AFAR Cabs was founded by Ms. Sulthana Rasiya Nasurudeen and Mr. Mohamed Asik, with a mission to build
 portability for people of all ages in a secured way mainly focusing on women and child safety. The AFAR
 Technologies headquarters is located in Madurai, Tamilnadu.
-We at AFAR cabs, envision to support Android users with a safe and hassle-free mobility platform. We
+\nWe at AFAR cabs, envision to support Android users with a safe and hassle-free mobility platform. We
 have made travelling all the way more comfortable and seek to provide our users an enriching
 experience. All you need to do is just enable your location, go online, book a service and within span of
 few minutes, the cab arrives at the specified location. We also serve our customers with on-time
 delivery of goods and offer door-to-door service of commodity.
-Apart from serving our customers, we also ensure the satisfaction and happiness of our Pilot’s who
+\nApart from serving our customers, we also ensure the satisfaction and happiness of our Pilot’s who
 commute our customers to their desired location. We encourage them by giving reward points and
 bonus for their commendable job done.
 We provide our pilots and users with geo-location services on three vital factors – accessing the

@@ -38,9 +38,8 @@ import com.wings.mile.databinding.ActivityMain3Binding
 import com.wings.mile.model.savedriver
 import com.wings.mile.preview.Popuppdf
 import com.wings.mile.service.RetrofitService
-import com.wings.mile.viewmodel.MainRepository
-import com.wings.mile.viewmodel.MainViewModel
-import com.wings.mile.viewmodel.MyViewModelFactory
+import com.wings.mile.service.RetrofitService1
+import com.wings.mile.viewmodel.*
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
@@ -62,10 +61,13 @@ class DetailsActivity2 : Fragment() {
     private var someActivityResultLauncher: ActivityResultLauncher<Intent>? = null
 
     private var pdfFilePath: String? = null
+    private var message: String? = null
 
     private var myFilePath: File? = null;
     private var stringBase64ImageProfile: String? = ""
     private var observableVal: MutableLiveData<Boolean> = MutableLiveData(false);
+    private val retrofitService1 = RetrofitService1.getInstance()
+    lateinit var viewModel1: MainViewModel1
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -91,6 +93,10 @@ class DetailsActivity2 : Fragment() {
         viewModel =
             ViewModelProvider(this, MyViewModelFactory(MainRepository(retrofitService))).get(
                 MainViewModel::class.java
+            )
+        viewModel1 =
+            ViewModelProvider(this, MyViewModelFactory1(MainRepository1(retrofitService1))).get(
+                MainViewModel1::class.java
             )
     }
 
@@ -208,6 +214,7 @@ class DetailsActivity2 : Fragment() {
                             ) {
                                 val intent = Intent(context, NavigationActivity::class.java)
                                 startActivity(intent)
+                                sendsms()
                             }
 
                     } else {
@@ -269,6 +276,8 @@ class DetailsActivity2 : Fragment() {
                             ) {
                                 val intent = Intent(context, NavigationActivity::class.java)
                                 startActivity(intent)
+                                sendsmsrejected()
+
                             }
 
                     } else {
@@ -400,11 +409,11 @@ class DetailsActivity2 : Fragment() {
                         val pdfInBytes = ByteArray(inputStream!!.available())
                         Log.e("bbbbbbbbb",""+pdfInBytes.size)
                         Log.e("bbbbbbbbb",""+pdfInBytes.size / 1024)
-                        val fileSizeInKB: Int = pdfInBytes.size / 1024
-                        if (fileSizeInKB > 20 || fileSizeInKB < 12) {
-                            showAlertDialog()
-                            stringBase64ImageProfile = null
-                        } else {
+//                        val fileSizeInKB: Int = pdfInBytes.size / 1024
+//                        if (fileSizeInKB > 20 || fileSizeInKB < 12) {
+//                            showAlertDialog()
+//                            stringBase64ImageProfile = null
+//                        } else {
                         val uriString: String = uri.toString()
                         myFilePath = File(uriString)
                             val file_size: Int = java.lang.String.valueOf(myFilePath!!.length() / 1024).toInt()
@@ -438,7 +447,7 @@ class DetailsActivity2 : Fragment() {
                         }
 
                     }
-                    }
+                    //}
                 } catch (e: Exception) {
                     Log.e("check", "issue Message -----> " + e.localizedMessage);
                     e.printStackTrace()
@@ -505,4 +514,61 @@ class DetailsActivity2 : Fragment() {
                 }
                 .show()
         }
+
+    fun sendsms() {
+        message = "https://www.smsgatewayhub.com/api/mt/SendSMS?APIKey=7n425U10ZEyLf0BqP3Zzrw&" +
+                "senderid=AFARPT&channel=2&DCS=0&flashsms=0&number=91" + savedriver1.phone_number +
+                "&text=Your application has been verified and approved by the AFAR Cab team.Begin your journey by logging in with your registered mobile number" + "&route=1&dlttemplateid=1007654192644988416"
+
+
+        viewModel1!!.updateuser(message!!).observe(requireActivity()) {
+            it.let { resource ->
+                when (resource!!.status) {
+                    com.wings.mile.Utils.Status.LOADING -> {
+                    }
+                    com.wings.mile.Utils.Status.SUCCESS -> {
+                        Log.e("data", "" + it!!.data.toString())
+
+
+                    }
+                    com.wings.mile.Utils.Status.ERROR -> {
+                        if (it!!.data == null) {
+
+                        }
+
+                        // binding!!.LoginAvi.hide()
+
+                    }
+                }
+            }
+        }
+    }
+        fun sendsmsrejected() {
+            message="https://www.smsgatewayhub.com/api/mt/SendSMS?APIKey=7n425U10ZEyLf0BqP3Zzrw&" +
+                    "senderid=AFARPT&channel=2&DCS=0&flashsms=0&number=91"+savedriver1.phone_number+
+                    "&text=Your application with AFAR Cabs has been put on hold for the below-mentioned reason  "+dataBinding.editTextComments.text.toString() +". Kindly login and update your profile with the necessary details.&route=1&dlttemplateid=1007694432375728006"
+
+
+            viewModel1!!.updateuser(message!!).observe(requireActivity()) {
+                it.let { resource ->
+                    when (resource!!.status) {
+                        com.wings.mile.Utils.Status.LOADING -> {
+                        }
+                        com.wings.mile.Utils.Status.SUCCESS -> {
+                            Log.e("data", "" + it!!.data.toString())
+
+
+                        }
+                        com.wings.mile.Utils.Status.ERROR -> {
+                            if (it!!.data == null) {
+
+                            }
+
+                            // binding!!.LoginAvi.hide()
+
+                        }
+                    }
+                }
+            }
+    }
 }

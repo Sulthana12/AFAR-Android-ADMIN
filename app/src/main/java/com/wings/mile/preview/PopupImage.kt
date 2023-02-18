@@ -15,6 +15,9 @@ import androidx.databinding.BaseObservable
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.signature.ObjectKey
 import com.wings.mile.R
 import com.wings.mile.databinding.PreviewImagesBinding
 import java.io.File
@@ -56,8 +59,12 @@ class PopupImage(private var activity: FragmentActivity?,fileurl: String) : Base
 //                defectImageviewBinding.fullimageview.setImageBitmap(imgBitmap)
 //            }
 
-                    Glide.with(defectImageviewBinding.fullimageview).load(fileurl)
-                        .into(defectImageviewBinding.fullimageview)
+            Glide.with(defectImageviewBinding.fullimageview)
+                .load(fileurl)
+                .apply(RequestOptions.skipMemoryCacheOf(true))
+                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
+                .signature(ObjectKey(System.currentTimeMillis()))
+                .into(defectImageviewBinding.fullimageview)
 
 
             defectImageviewBinding.previewViewModels  = this

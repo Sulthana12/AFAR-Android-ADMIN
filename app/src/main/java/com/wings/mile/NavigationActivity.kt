@@ -53,8 +53,11 @@ import com.wings.mile.dialog.CustomSuccessDialogFragment
 import com.wings.mile.dialog.OptionDialogFragment
 import com.wings.mile.model.*
 import com.wings.mile.service.RetrofitService
+import com.wings.mile.ui.RefundsFragment
+import com.wings.mile.ui.TermsFragment
 import com.wings.mile.ui.contactus.ContactusFragment
 import com.wings.mile.ui.aboutus.AboutusFragment
+import com.wings.mile.ui.aboutus.PrivacyFragment
 import com.wings.mile.ui.home.HomeFragment
 import com.wings.mile.ui.passengers.PassengersFragment
 import com.wings.mile.ui.payments.PaymentsFragment
@@ -321,10 +324,10 @@ class NavigationActivity : BaseActivity(), OptionDialogFragment.OnItemSelect,
             bm = MediaStore.Images.Media.getBitmap(applicationContext.contentResolver, data?.data)
             val tempUri = data?.data
 
-            if (Utility.getFolderSizeLabel(this, tempUri) > 20) {
-                CustomSuccessDialogFragment(this, R.string.img_size_alert, R.drawable.ic_warning).show(supportFragmentManager, "CustomSuccessDialogFragment")
-                stringBase64ImageProfile = null
-            } else {
+//            if (Utility.getFolderSizeLabel(this, tempUri) > 20) {
+//                CustomSuccessDialogFragment(this, R.string.img_size_alert, R.drawable.ic_warning).show(supportFragmentManager, "CustomSuccessDialogFragment")
+//                stringBase64ImageProfile = null
+//            } else {
                 when (value) {
 
                     0 -> {
@@ -377,7 +380,7 @@ class NavigationActivity : BaseActivity(), OptionDialogFragment.OnItemSelect,
                         stringBase64VehicleImage = encodeTobase64(bm!!)
 
                     }
-                }
+                //}
             }
 
 
@@ -390,10 +393,10 @@ class NavigationActivity : BaseActivity(), OptionDialogFragment.OnItemSelect,
                 // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
                 var tempUri: Uri? = null
                 tempUri = Utility.getImageUri(this, photo)
-                if (Utility.getFolderSizeLabel(this, tempUri) > 20) {
-                    CustomSuccessDialogFragment(this, R.string.img_size_alert, R.drawable.ic_warning).show(supportFragmentManager, "CustomSuccessDialogFragment")
-                    stringBase64ImageProfile = null
-                } else {
+//                if (Utility.getFolderSizeLabel(this, tempUri) > 20) {
+//                    CustomSuccessDialogFragment(this, R.string.img_size_alert, R.drawable.ic_warning).show(supportFragmentManager, "CustomSuccessDialogFragment")
+//                    stringBase64ImageProfile = null
+//                } else {
                     if (value != 0) {
                         tempUri = Utility.getImageUri(this, photo)
                     }
@@ -453,7 +456,7 @@ class NavigationActivity : BaseActivity(), OptionDialogFragment.OnItemSelect,
 
 
                         }
-                    }
+                    //}
                 }
 
             } catch (e: java.lang.Exception) {
@@ -787,6 +790,7 @@ class NavigationActivity : BaseActivity(), OptionDialogFragment.OnItemSelect,
             .setPositiveButton(android.R.string.yes) { dialog: DialogInterface?, which: Int ->
                 dialog!!.dismiss()
                 val i = Intent(this, LoginActivity::class.java)
+
                 i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(i)
                 finish()
@@ -822,7 +826,7 @@ override fun onOptionsItemSelected(item: MenuItem): Boolean {
     } else super.onOptionsItemSelected(item)
 }
     fun updateAcMenuAdapter() {
-        drawerItem = arrayOfNulls(7)
+        drawerItem = arrayOfNulls(10)
         val layoutManager = LinearLayoutManager(this)
         binding.menulist.layoutManager = layoutManager
         drawerItem[0] = Datamodel(R.drawable.dashboard, getString(R.string.menu_dash), true)
@@ -831,7 +835,10 @@ override fun onOptionsItemSelected(item: MenuItem): Boolean {
         drawerItem[3] = Datamodel(R.drawable.refer, getString(R.string.menu_refer), false)
         drawerItem[4] = Datamodel(R.drawable.payments, getString(R.string.menu_payments), false)
         drawerItem[5] = Datamodel(R.drawable.ic_baseline_support_agent_24, getString(R.string.menu_help), false)
-        drawerItem[6] = Datamodel(R.drawable.about, getString(R.string.menu_about), false)
+        drawerItem[6] = Datamodel(R.drawable.ic_baseline_support_agent_24, getString(R.string.terms_and_privacy_policy), false)
+        drawerItem[7] = Datamodel(R.drawable.ic_baseline_privacy_tip_24, getString(R.string.privacy_policy), false)
+        drawerItem[8] = Datamodel(R.drawable.ic_baseline_free_cancellation_24, getString(R.string.refund_policy), false)
+        drawerItem[9] = Datamodel(R.drawable.about, getString(R.string.menu_about), false)
         adapter = NavigationListAdapter(this, drawerItem!!)
         adapter!!.setClickListener {_: View?, position: Int ->
             var fragment: Fragment? = null
@@ -868,12 +875,24 @@ override fun onOptionsItemSelected(item: MenuItem): Boolean {
                 binding.appBarNavigation.actionbarAccount.toolbarTitle.text="Support"
 
             } else if (position == 6) {
-                fragment = AboutusFragment()
+                fragment = TermsFragment()
                 replaceFragment(fragment)
-                binding.appBarNavigation.actionbarAccount.toolbarTitle.text="About us"
+                binding.appBarNavigation.actionbarAccount.toolbarTitle.text= getString(R.string.terms_and_privacy_policy)
 
-            } else if (position == 7) {
+            }  else if (position == 7) {
+                fragment = PrivacyFragment()
+                binding.appBarNavigation.actionbarAccount.toolbarTitle.text= getString(R.string.privacy_policy)
+                replaceFragment(fragment)
+
+            }else if (position == 8) {
+                fragment = RefundsFragment()
+                binding.appBarNavigation.actionbarAccount.toolbarTitle.text= getString(R.string.refund_policy)
+                replaceFragment(fragment)
+
+            }
+            else if (position == 9) {
                 fragment = AboutusFragment()
+                binding.appBarNavigation.actionbarAccount.toolbarTitle.text= getString(R.string.menu_about)
                 replaceFragment(fragment)
 
             }

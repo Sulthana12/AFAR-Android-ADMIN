@@ -10,6 +10,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -32,6 +33,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -162,6 +164,7 @@ class DashboardActivity : BaseActivity(), OptionDialogFragment.OnItemSelect,
             Pref_storage.setDetail(this,"Districtid","")
             Pref_storage.setDetail(this,"Insuranceexpirydate","")
             Pref_storage.setDetail(this,"Licenseexpirydate","")
+            Pref_storage.setDetail(this,"Driverdetails","")
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -485,10 +488,10 @@ class DashboardActivity : BaseActivity(), OptionDialogFragment.OnItemSelect,
             bm = MediaStore.Images.Media.getBitmap(applicationContext.contentResolver, data?.data)
             val tempUri = data?.data
 
-            if (getFolderSizeLabel(this, tempUri) > 20) {
-                CustomSuccessDialogFragment(this, R.string.img_size_alert, R.drawable.ic_warning).show(supportFragmentManager, "CustomSuccessDialogFragment")
-                stringBase64ImageProfile = null
-            } else {
+//            if (getFolderSizeLabel(this, tempUri) > 20) {
+//                CustomSuccessDialogFragment(this, R.string.img_size_alert, R.drawable.ic_warning).show(supportFragmentManager, "CustomSuccessDialogFragment")
+//                stringBase64ImageProfile = null
+//            } else {
                 when (value) {
 
                     0 -> {
@@ -541,7 +544,7 @@ class DashboardActivity : BaseActivity(), OptionDialogFragment.OnItemSelect,
                         stringBase64VehicleImage = encodeTobase64(bm!!)
 
                     }
-                }
+                //}
             }
 
 
@@ -554,10 +557,17 @@ class DashboardActivity : BaseActivity(), OptionDialogFragment.OnItemSelect,
                 // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
                 var tempUri: Uri? = null
                 tempUri = Utility.getImageUri(this, photo)
-                if (getFolderSizeLabel(this, tempUri) > 20) {
-                    CustomSuccessDialogFragment(this, R.string.img_size_alert, R.drawable.ic_warning).show(supportFragmentManager, "CustomSuccessDialogFragment")
-                    stringBase64ImageProfile = null
-                } else {
+//                val imageFile = data?.getSerializableExtra("captureFile") as File
+//
+//                photo = com.disys.agri.Utility.rotateImageIfRequired(this,
+//                    BitmapFactory.decodeFile(imageFile.path),imageFile.toUri())
+//                val mTempPath = imageFile.path
+//                uriOfImage = mTempPath.toUri()
+//                byteArrayImage = getByteArrayImage(photo!!)
+//                if (getFolderSizeLabel(this, tempUri) > 20) {
+//                    CustomSuccessDialogFragment(this, R.string.img_size_alert, R.drawable.ic_warning).show(supportFragmentManager, "CustomSuccessDialogFragment")
+//                    stringBase64ImageProfile = null
+//                } else {
                     if (value != 0) {
                         tempUri = Utility.getImageUri(this, photo)
                     }
@@ -583,14 +593,14 @@ class DashboardActivity : BaseActivity(), OptionDialogFragment.OnItemSelect,
                             } else {
                                 Log.e("check", "check data---> ")
                             }
-                            stringBase64AadharImage = encodeTobase64(photo!!)
+                            stringBase64AadharImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT)
 
                         }
                         2 -> {
 
                             textview!!.text = getRealPathFromURI(tempUri!!)
 
-                            stringBase64LicenseImage = encodeTobase64(photo!!)
+                            stringBase64LicenseImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT)
                             Pref_storage.setDetail(this,"Licensetext",textview!!.text.toString())
 
 
@@ -598,26 +608,26 @@ class DashboardActivity : BaseActivity(), OptionDialogFragment.OnItemSelect,
                         3 -> {
 
                             textview!!.text = getRealPathFromURI(tempUri!!)
-                            stringBase64InsuranceImage = encodeTobase64(photo!!)
+                            stringBase64InsuranceImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT)
                             Pref_storage.setDetail(this,"Insurancetext",textview!!.text.toString())
 
                         }
                         4 -> {
 
                             textview!!.text = getRealPathFromURI(tempUri!!)
-                            stringBase64PanImage = encodeTobase64(photo!!)
+                            stringBase64PanImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT)
                             Pref_storage.setDetail(this,"Pantext",textview!!.text.toString())
 
                         }
                         5 -> {
 
                             textview!!.text = getRealPathFromURI(tempUri!!)
-                            stringBase64VehicleImage = encodeTobase64(photo!!)
+                            stringBase64VehicleImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT)
                             Pref_storage.setDetail(this,"Vehicletext",textview!!.text.toString())
 
 
                         }
-                    }
+                    //}
                 }
 
             } catch (e: java.lang.Exception) {

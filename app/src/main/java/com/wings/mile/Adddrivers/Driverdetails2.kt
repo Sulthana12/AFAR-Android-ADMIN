@@ -252,11 +252,11 @@ class Driverdetails2 : Fragment() {
                     val inputStream = requireActivity()!!.contentResolver.openInputStream(uri!!)
                     val pdfInBytes = ByteArray(inputStream!!.available())
 
-                    val fileSizeInKB: Int = pdfInBytes.size / 1024
-                    if (fileSizeInKB > 20 || fileSizeInKB < 12) {
-                        showAlertDialog()
-                        stringBase64ImageProfile = null
-                    } else {
+//                    val fileSizeInKB: Int = pdfInBytes.size / 1024
+//                    if (fileSizeInKB > 20 || fileSizeInKB < 12) {
+//                        showAlertDialog()
+//                        stringBase64ImageProfile = null
+//                    } else {
                     val uriString : String = uri.toString()
 
 
@@ -293,7 +293,7 @@ class Driverdetails2 : Fragment() {
 
                     }
 
-                }
+               // }
                 }
             }
         }

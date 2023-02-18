@@ -167,6 +167,7 @@ class DashboardViewActivity : BaseActivity(), OptionDialogFragment.OnItemSelect,
             Pref_storage.setDetail(this,"Districtid","")
             Pref_storage.setDetail(this,"Insuranceexpirydate","")
             Pref_storage.setDetail(this,"Licenseexpirydate","")
+            Pref_storage.setDetail(this,"Driverdetails","")
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -351,7 +352,7 @@ class DashboardViewActivity : BaseActivity(), OptionDialogFragment.OnItemSelect,
                     district = savedriver.usr_district,
                     drv_license_no = "",
                     en_flag = "",
-                    pincode = "",
+                    pincode = binding.commodityunit.pincodeEdittext.text.toString(),
                     state = savedriver.usr_state,
                     vehicle_type_id = savedriver.vehicle_type_id,
                     district_id = savedriver.district_id,
@@ -423,16 +424,17 @@ class DashboardViewActivity : BaseActivity(), OptionDialogFragment.OnItemSelect,
         photoimageView = imageView
         textview = imagename
         value = i
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ==
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            if (checkSelfPermission(Manifest.permission.READ_MEDIA_IMAGES) ==
                 PackageManager.PERMISSION_DENIED
             ) {
                 //permission denied
                 val permissions = arrayOf(
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_MEDIA_IMAGES,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.CAMERA,
-                )
+
+                    )
                 //show popup to request runtime permission
                 requestPermissions(permissions, PERMISSION_CODE)
             } else if (checkSelfPermission(Manifest.permission.CAMERA) ==
@@ -443,7 +445,40 @@ class DashboardViewActivity : BaseActivity(), OptionDialogFragment.OnItemSelect,
                     Manifest.permission.READ_EXTERNAL_STORAGE,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.CAMERA,
+
+                    )
+                //show popup to request runtime permission
+                requestPermissions(permissions, PERMISSION_CODE)
+            } else {
+                //permission already granted
+                OptionDialogFragment(this, false, 2).show(
+                    supportFragmentManager,
+                    "OptionDialogFragment"
                 )
+            }
+        }else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ==
+                PackageManager.PERMISSION_DENIED
+            ) {
+                //permission denied
+                val permissions = arrayOf(
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.CAMERA,
+
+                    )
+                //show popup to request runtime permission
+                requestPermissions(permissions, PERMISSION_CODE)
+            } else if (checkSelfPermission(Manifest.permission.CAMERA) ==
+                PackageManager.PERMISSION_DENIED
+            ) {
+                //permission denied
+                val permissions = arrayOf(
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.CAMERA,
+
+                    )
                 //show popup to request runtime permission
                 requestPermissions(permissions, PERMISSION_CODE)
             } else {
@@ -466,16 +501,17 @@ class DashboardViewActivity : BaseActivity(), OptionDialogFragment.OnItemSelect,
     fun pickPhotoImage(imageView: ImageView) {
         photoimageView = imageView
         value = 0
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ==
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            if (checkSelfPermission(Manifest.permission.READ_MEDIA_IMAGES) ==
                 PackageManager.PERMISSION_DENIED
             ) {
                 //permission denied
                 val permissions = arrayOf(
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_MEDIA_IMAGES,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.CAMERA,
-                )
+
+                    )
                 //show popup to request runtime permission
                 requestPermissions(permissions, PERMISSION_CODE)
             } else if (checkSelfPermission(Manifest.permission.CAMERA) ==
@@ -485,6 +521,39 @@ class DashboardViewActivity : BaseActivity(), OptionDialogFragment.OnItemSelect,
                 val permissions = arrayOf(
                     Manifest.permission.READ_EXTERNAL_STORAGE,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.CAMERA,
+
+                    )
+                //show popup to request runtime permission
+                requestPermissions(permissions, PERMISSION_CODE)
+            } else {
+                //permission already granted
+                OptionDialogFragment(this, false, 2).show(
+                    supportFragmentManager,
+                    "OptionDialogFragment"
+                )
+            }
+        }else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ==
+                PackageManager.PERMISSION_DENIED
+            ) {
+                //permission denied
+                val permissions = arrayOf(
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.CAMERA,
+
+                    )
+                //show popup to request runtime permission
+                requestPermissions(permissions, PERMISSION_CODE)
+            } else if (checkSelfPermission(Manifest.permission.CAMERA) ==
+                PackageManager.PERMISSION_DENIED
+            ) {
+                //permission denied
+                val permissions = arrayOf(
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+
                     Manifest.permission.CAMERA,
                 )
                 //show popup to request runtime permission
@@ -504,7 +573,6 @@ class DashboardViewActivity : BaseActivity(), OptionDialogFragment.OnItemSelect,
             )
         }
     }
-
     private fun pickImageFromGallery() {
         //Intent to pick image
         val intent = Intent(Intent.ACTION_PICK)
@@ -555,10 +623,10 @@ class DashboardViewActivity : BaseActivity(), OptionDialogFragment.OnItemSelect,
             bm = MediaStore.Images.Media.getBitmap(applicationContext.contentResolver, data?.data)
             val tempUri = data?.data
 
-            if (getFolderSizeLabel(this, tempUri) > 20) {
-                CustomSuccessDialogFragment(this, R.string.img_size_alert, R.drawable.ic_warning).show(supportFragmentManager, "CustomSuccessDialogFragment")
-                stringBase64ImageProfile = null
-            } else {
+//            if (getFolderSizeLabel(this, tempUri) > 20) {
+//                CustomSuccessDialogFragment(this, R.string.img_size_alert, R.drawable.ic_warning).show(supportFragmentManager, "CustomSuccessDialogFragment")
+//                stringBase64ImageProfile = null
+//            } else {
                 when (value) {
 
                     0 -> {
@@ -611,7 +679,7 @@ class DashboardViewActivity : BaseActivity(), OptionDialogFragment.OnItemSelect,
                         stringBase64VehicleImage = encodeTobase64(bm!!)
 
                     }
-                }
+               // }
             }
 
 
@@ -624,10 +692,10 @@ class DashboardViewActivity : BaseActivity(), OptionDialogFragment.OnItemSelect,
                 // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
                 var tempUri: Uri? = null
                 tempUri = Utility.getImageUri(this, photo)
-                if (getFolderSizeLabel(this, tempUri) > 20) {
-                    CustomSuccessDialogFragment(this, R.string.img_size_alert, R.drawable.ic_warning).show(supportFragmentManager, "CustomSuccessDialogFragment")
-                    stringBase64ImageProfile = null
-                } else {
+//                if (getFolderSizeLabel(this, tempUri) > 20) {
+//                    CustomSuccessDialogFragment(this, R.string.img_size_alert, R.drawable.ic_warning).show(supportFragmentManager, "CustomSuccessDialogFragment")
+//                    stringBase64ImageProfile = null
+//                } else {
                     if (value != 0) {
                         tempUri = Utility.getImageUri(this, photo)
                     }
@@ -653,14 +721,14 @@ class DashboardViewActivity : BaseActivity(), OptionDialogFragment.OnItemSelect,
                             } else {
                                 Log.e("check", "check data---> ")
                             }
-                            stringBase64AadharImage = encodeTobase64(photo!!)
+                            stringBase64AadharImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT)
 
                         }
                         2 -> {
 
                             textview!!.text = getRealPathFromURI(tempUri!!)
 
-                            stringBase64LicenseImage = encodeTobase64(photo!!)
+                            stringBase64LicenseImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT)
                             Pref_storage.setDetail(this,"Licensetext",textview!!.text.toString())
 
 
@@ -668,26 +736,26 @@ class DashboardViewActivity : BaseActivity(), OptionDialogFragment.OnItemSelect,
                         3 -> {
 
                             textview!!.text = getRealPathFromURI(tempUri!!)
-                            stringBase64InsuranceImage = encodeTobase64(photo!!)
+                            stringBase64InsuranceImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT)
                             Pref_storage.setDetail(this,"Insurancetext",textview!!.text.toString())
 
                         }
                         4 -> {
 
                             textview!!.text = getRealPathFromURI(tempUri!!)
-                            stringBase64PanImage = encodeTobase64(photo!!)
+                            stringBase64PanImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT)
                             Pref_storage.setDetail(this,"Pantext",textview!!.text.toString())
 
                         }
                         5 -> {
 
                             textview!!.text = getRealPathFromURI(tempUri!!)
-                            stringBase64VehicleImage = encodeTobase64(photo!!)
+                            stringBase64VehicleImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT)
                             Pref_storage.setDetail(this,"Vehicletext",textview!!.text.toString())
 
 
                         }
-                    }
+                    //}
                 }
 
             } catch (e: java.lang.Exception) {
@@ -825,7 +893,7 @@ class DashboardViewActivity : BaseActivity(), OptionDialogFragment.OnItemSelect,
                             val fileImage: File = Utility().savebitmap(photo!!, value, this)
                             Log.e("check", "image Path ===> " + fileImage.absolutePath)
                             textview!!.text = fileImage.name
-                            stringBase64AadharImage = encodeTobase64(photo)
+                            stringBase64AadharImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT)
                             Pref_storage.setDetail(this,"adhartext",textview!!.text.toString())
 
                         }
@@ -835,7 +903,7 @@ class DashboardViewActivity : BaseActivity(), OptionDialogFragment.OnItemSelect,
                             val fileImage: File = Utility().savebitmap(photo!!, value, this)
                             Log.e("check", "image Path ===> " + fileImage.absolutePath)
                             textview!!.text = fileImage.name
-                            stringBase64LicenseImage = encodeTobase64(photo)
+                            stringBase64LicenseImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT)
                             Pref_storage.setDetail(this,"Licensetext",textview!!.text.toString())
 
                         }
@@ -845,7 +913,7 @@ class DashboardViewActivity : BaseActivity(), OptionDialogFragment.OnItemSelect,
                             val fileImage: File = Utility().savebitmap(photo!!, value, this)
                             Log.e("check", "image Path ===> " + fileImage.absolutePath)
                             textview!!.text = fileImage.name
-                            stringBase64InsuranceImage = encodeTobase64(photo!!)
+                            stringBase64InsuranceImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT)
                             Pref_storage.setDetail(this,"Insurancetext",textview!!.text.toString())
 
 
@@ -856,7 +924,7 @@ class DashboardViewActivity : BaseActivity(), OptionDialogFragment.OnItemSelect,
                             val fileImage: File = Utility().savebitmap(photo!!, value, this)
                             Log.e("check", "image Path ===> " + fileImage.absolutePath)
                             textview!!.text = fileImage.name
-                            stringBase64PanImage = encodeTobase64(photo!!)
+                            stringBase64PanImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT)
                             Pref_storage.setDetail(this,"Pantext",textview!!.text.toString())
 
 
@@ -867,7 +935,7 @@ class DashboardViewActivity : BaseActivity(), OptionDialogFragment.OnItemSelect,
                             val fileImage: File = Utility().savebitmap(photo!!, value, this)
                             Log.e("check", "image Path ===> " + fileImage.absolutePath)
                             textview!!.text = fileImage.name
-                            stringBase64VehicleImage = encodeTobase64(photo!!)
+                            stringBase64VehicleImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT)
                             Pref_storage.setDetail(this,"Vehicletext",textview!!.text.toString())
 
 

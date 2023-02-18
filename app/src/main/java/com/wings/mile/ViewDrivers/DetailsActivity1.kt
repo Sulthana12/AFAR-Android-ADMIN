@@ -17,26 +17,22 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
+import com.google.gson.Gson
+import com.wings.mile.DashboardViewActivity
 import com.wings.mile.R
+import com.wings.mile.Utils.Pref_storage
 import com.wings.mile.databinding.ActivityMain1Binding
 import com.wings.mile.model.*
+import com.wings.mile.preview.PopupImage
 import com.wings.mile.preview.PopupImageView
 import com.wings.mile.service.RetrofitService
 import com.wings.mile.viewmodel.MainRepository
 import com.wings.mile.viewmodel.MainViewModel
 import com.wings.mile.viewmodel.MyViewModelFactory
-import com.google.gson.Gson
-import com.wings.mile.DashboardActivity
-import com.wings.mile.DashboardViewActivity
-import com.wings.mile.NavigationActivity
-import com.wings.mile.Utils.Pref_storage
-import com.wings.mile.Utils.Utility
-import com.wings.mile.preview.PopupImage
-import java.io.File
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class DetailsActivity1 :Fragment() {
 
@@ -514,32 +510,35 @@ class DetailsActivity1 :Fragment() {
 
                 }else{
 
+
                     PopupImageView(requireActivity(),decodedByte,getdriverdetails.plateno_file_location+getdriverdetails.plateno_file_name).showFullImageView()            }
                 }
         }
         dataBinding.imagenamelicense.setOnClickListener {
             if (dataBinding.imagenamelicense.text.toString().isNotEmpty()) {
 
-                try{
-                val fileFolder = Utility().getFileFolder(context)
+                val decodedString: ByteArray = Base64.decode(
+                    (activity as DashboardViewActivity).getlicense(),
+                    Base64.DEFAULT
+                )
+                val decodedByte =
+                    BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+                if (decodedByte == null) {
+                    PopupImage(
+                        requireActivity(),
+                        getdriverdetails.licno_file_location + getdriverdetails.licno_file_name
+                    ).showFullImageView()
 
-                val mediaFile = File(fileFolder.path + File.separator + dataBinding.imagenamelicense.text.toString())
+                } else {
 
-                val decodedString: ByteArray = Base64.decode((activity as DashboardViewActivity).getlicense(), Base64.DEFAULT)
-                val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
-                    if(decodedByte==null){
-                        PopupImage(requireActivity(),getdriverdetails.licno_file_location+getdriverdetails.licno_file_name).showFullImageView()
+                    PopupImageView(
+                        requireActivity(),
+                        decodedByte,
+                        getdriverdetails.licno_file_location + getdriverdetails.licno_file_name
+                    ).showFullImageView()
 
-                    }else{
-
-                           PopupImageView(requireActivity(),decodedByte,getdriverdetails.licno_file_location+getdriverdetails.licno_file_name).showFullImageView()
                 }
-                }
-                catch (e:Exception){
-                    e.printStackTrace()
-                }
-                  }
-
+            }
         }
         dataBinding.imagenameinsurance.setOnClickListener {
             if (dataBinding.imagenameinsurance.text.toString().isNotEmpty()) {
@@ -559,7 +558,7 @@ class DetailsActivity1 :Fragment() {
         dataBinding.imagenameaadhar.setOnClickListener {
             if (dataBinding.imagenameaadhar.text.toString().isNotEmpty()) {
                 val decodedString: ByteArray = Base64.decode(
-                    (activity as DashboardViewActivity).getinsurancebase64(),
+                    (activity as DashboardViewActivity).getaadharbase64(),
                     Base64.DEFAULT
                 )
                 val decodedByte =
@@ -585,7 +584,7 @@ class DetailsActivity1 :Fragment() {
         dataBinding.imagenamepancard.setOnClickListener {
             if (dataBinding.imagenamepancard.text.toString().isNotEmpty()) {
                 val decodedString: ByteArray = Base64.decode(
-                    (activity as DashboardViewActivity).getinsurancebase64(),
+                    (activity as DashboardViewActivity).getpanbase64(),
                     Base64.DEFAULT
                 )
                 val decodedByte =

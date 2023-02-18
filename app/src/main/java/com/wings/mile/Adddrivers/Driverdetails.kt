@@ -9,6 +9,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
+import android.text.InputFilter
 import android.text.InputType
 import android.util.Base64
 import android.util.Log
@@ -64,6 +65,7 @@ class Driverdetails : Fragment(), DatePickerDialog.OnDateSetListener {
     val REGEX_PATTERN_1 = "\\d{2}-\\d{2}-\\d{4}"
     lateinit var pickedDate: LocalDate
     var eighteenYearsAgo = LocalDate.now() - Period.ofYears(18)
+    private val blockCharacterSet = "₹@.~#^:;?'|$%&*!/_,()-+0123456789"
     private val REQUIRED_PERMISSIONS = arrayOf(
         "android.permission.CAMERA",
         "android.permission.WRITE_EXTERNAL_STORAGE",
@@ -71,7 +73,12 @@ class Driverdetails : Fragment(), DatePickerDialog.OnDateSetListener {
     )
     private val retrofitService = RetrofitService.getInstance()
     lateinit var myContext: Context
-
+    private val filters =
+        InputFilter { source, start, end, dest, dstart, dend ->
+            if (source != null && blockCharacterSet.contains("" + source)) {
+                ""
+            } else null
+        }
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -119,7 +126,8 @@ class Driverdetails : Fragment(), DatePickerDialog.OnDateSetListener {
             e.printStackTrace()
         }
 
-
+        dataBinding.firstnameEdittext.filters=arrayOf<InputFilter>(filters )
+        dataBinding.lastnameEdittext.filters=arrayOf<InputFilter>(filters )
         val bundle = this.arguments
         val genderValue = Gson().toJson( (activity as DashboardActivity).getgender())
         val vehicleValue = bundle?.get("Vehicle")
@@ -364,7 +372,7 @@ class Driverdetails : Fragment(), DatePickerDialog.OnDateSetListener {
     private fun getByteArrayImage(data: Intent?): ByteArray {
         val stream = ByteArrayOutputStream()
         val bmp = data!!.extras!!["data"] as Bitmap?
-        bmp!!.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+        bmp!!.compress(Bitmap.CompressFormat.JPEG, 70, stream)
         val byteArray = stream.toByteArray()
         bmp.recycle()
         return byteArray
